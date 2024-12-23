@@ -1,6 +1,6 @@
 import { getForecast } from "@/app/lib/actions";
 import clsx from "clsx"; 
-import { Forecast, Hour } from "@/app/lib/definitions";
+import { Forecast, Hour, WeatherData, CurrrentData } from "@/app/lib/definitions";
 import React from "react";
 
 export default async function WeatherCard({
@@ -10,9 +10,10 @@ export default async function WeatherCard({
     url: string;
     temp_unit: string;
   }) {
-    const data: Record<string, any> = await getForecast(url);
+    
+    const data: WeatherData = await getForecast(url);
   
-    const current_data = data.current;
+    const current_data : CurrrentData  = data.current;
     const forecast_data = data.forecast.forecastday;
     const location = data.location.name;
   
@@ -36,22 +37,12 @@ export default async function WeatherCard({
     );
   }
   
-export async function TodayCard({temp_unit, data, location}: {temp_unit: string, data: Record<string, any>, location: string}){
+export async function TodayCard({temp_unit, data, location}: {temp_unit: string, data: CurrrentData, location: string}){
 
     const is_day = data.is_day; 
     const description = data.condition.text; 
     const image = data.condition.icon; 
-    let temp : number = 0; 
-    let wind = data.wind_kph; 
-    let precip = data.precip.mm; 
-    let feel = data.feelslike_c; 
-
-    if (temp_unit == "F") {
-        temp = data.temp_f; 
-        wind = data.wind_mph; 
-        precip = data.precip_in; 
-        feel = data.feelslike_f; 
-    }
+    let temp : number = data.temp_c; 
 
     
     return(
@@ -155,7 +146,7 @@ export function ForecastDayCard({hour, image, temp} : {hour: number, image: stri
     )
 }
 
-export async function ConditionsCard({data, unit}:{data:Record<string, any>, unit:string}){
+export async function ConditionsCard({data, unit}:{data:CurrrentData, unit:string}){
     let temp_feel:number = data.feelslike_c; 
     let wind:number = data.wind_kph; 
     const uv: number = data.uv; 
