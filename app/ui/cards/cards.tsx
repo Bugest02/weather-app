@@ -37,12 +37,12 @@ export default async function WeatherCard({
     );
   }
   
-export async function TodayCard({temp_unit, data, location}: {temp_unit: string, data: CurrrentData, location: string}){
+export async function TodayCard({ data, location}: { data: CurrrentData, location: string}){
 
     const is_day = data.is_day; 
     const description = data.condition.text; 
     const image = data.condition.icon; 
-    let temp : number = data.temp_c; 
+    const temp : number = data.temp_c; 
 
     
     return(
@@ -121,7 +121,7 @@ export async function DailyForecast({data} : {data: Hour[]}){
             <p className="mb-3 font-bold text-xs text-gray-400">TODAY"S FORECAST</p>
             <div className="w-full flex overflow-x-scroll scrollbar-hide whitespace-nowrap divide-x divide-solid">
                 {data.map((hour, index) => {
-                    let string_date : string = hour.time;
+                    const string_date : string = hour.time;
                     string_date.replace(" ", "T"); 
                     const date : Date = new Date(string_date); 
 
