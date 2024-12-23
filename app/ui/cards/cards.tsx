@@ -45,7 +45,7 @@ export async function TodayCard({url, temp_unit, data, location}: {url: string, 
     const image = data.condition.icon; 
     const uv = data.uv; 
     const humidity = data.humidity; 
-    var temp : number = 0; 
+    let temp : number = 0; 
 
     if (temp_unit == 'C'){
         temp = data.temp_c; 
@@ -93,9 +93,9 @@ export async function WeeklyForecast({url, temp_unit, data}: {url: string, temp_
            <div className="grid rows-auto h-full divide-y">
                 {data.map((date, index) => {
                     const day: Date = new Date(date.date);
-                    var day_date: string = 'Today';  
-                    var min_temp: number = Math.round(date.day.mintemp_c); 
-                    var max_temp: number = Math.round(date.day.maxtemp_c); 
+                    let day_date: string = 'Today';  
+                    let min_temp: number = Math.round(date.day.mintemp_c); 
+                    let max_temp: number = Math.round(date.day.maxtemp_c); 
 
                     if (index != 0){
                         day_date = dates[day.getDay()]; 
@@ -138,7 +138,7 @@ export async function DailyForecast({data} : {data: Hour[]}){
             <p className="mb-3 font-bold text-xs text-gray-400">TODAY'S FORECAST</p>
             <div className="w-full flex overflow-x-scroll scrollbar-hide whitespace-nowrap divide-x divide-solid">
                 {data.map((hour, index) => {
-                    var string_date : string = hour.time;
+                    let string_date : string = hour.time;
                     string_date.replace(" ", "T"); 
                     const date : Date = new Date(string_date); 
 
@@ -164,8 +164,8 @@ export function ForecastDayCard({hour, image, temp} : {hour: number, image: stri
 }
 
 export async function ConditionsCard({data, unit}:{data:Record<string, any>, unit:string}){
-    var temp_feel:number = data.feelslike_c; 
-    var wind:number = data.wind_kph; 
+    let temp_feel:number = data.feelslike_c; 
+    let wind:number = data.wind_kph; 
     const uv: number = data.uv; 
     const humidity : number = data.humidity; 
 
