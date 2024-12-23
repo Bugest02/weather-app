@@ -1,7 +1,6 @@
-import { getCurrentWeather, getForecast } from "@/app/lib/actions";
-import clsx from 'clsx'; 
+import { getForecast } from "@/app/lib/actions";
+import clsx from "clsx"; 
 import { Forecast, Hour } from "@/app/lib/definitions";
-import { Span } from "next/dist/trace";
 import React from "react";
 
 export default async function WeatherCard({
@@ -22,7 +21,6 @@ export default async function WeatherCard({
         {/* Main content */}
         <div className="col-span-1 lg:col-span-2 space-y-4 w-full">
           <TodayCard
-            url={url}
             temp_unit={temp_unit}
             data={current_data}
             location={location}
@@ -32,40 +30,34 @@ export default async function WeatherCard({
         </div>
         {/* Sidebar */}
         <div className="col-span-1 w-full">
-          <WeeklyForecast url={url} temp_unit={temp_unit} data={forecast_data} />
+          <WeeklyForecast temp_unit={temp_unit} data={forecast_data} />
         </div>
       </div>
     );
   }
   
-export async function TodayCard({url, temp_unit, data, location}: {url: string, temp_unit: string, data: Record<string, any>, location: string}){
+export async function TodayCard({temp_unit, data, location}: {temp_unit: string, data: Record<string, any>, location: string}){
 
     const is_day = data.is_day; 
     const description = data.condition.text; 
     const image = data.condition.icon; 
-    const uv = data.uv; 
-    const humidity = data.humidity; 
-    var temp : number = 0; 
+    let temp : number = 0; 
+    let wind = data.wind_kph; 
+    let precip = data.precip.mm; 
+    let feel = data.feelslike_c; 
 
-    if (temp_unit == 'C'){
-        temp = data.temp_c; 
-        const wind = data.wind_kph; 
-        const precip = data.precip_mm; 
-        const feel = data.feelslike_c; 
-    }
-
-    else {
+    if (temp_unit == "F") {
         temp = data.temp_f; 
-        const wind = data.wind_mph; 
-        const precip = data.precip_in; 
-        const feel = data.feelslike_f; 
+        wind = data.wind_mph; 
+        precip = data.precip_in; 
+        feel = data.feelslike_f; 
     }
 
     
     return(
-        <div className={clsx('grid w-full px-8 py-5 grid-cols-3 gap-10 rounded-lg', {
-            'bg-sky-800' : is_day === 0, 
-            'bg-sky-200	' : is_day === 1
+        <div className={clsx("grid w-full px-8 py-5 grid-cols-3 gap-10 rounded-lg", {
+            "bg-sky-800" : is_day === 0, 
+            "bg-sky-200" : is_day === 1
         })}>
             <div className="relative col-span-2">
                 <h1 className={clsx("font-bold text-2xl tracking-wide", {
@@ -84,8 +76,8 @@ export async function TodayCard({url, temp_unit, data, location}: {url: string, 
     )
 }
 
-export async function WeeklyForecast({url, temp_unit, data}: {url: string, temp_unit: string, data: Forecast}){
-    const dates : string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; 
+export async function WeeklyForecast({temp_unit, data}: {temp_unit: string, data: Forecast}){
+    const dates : string[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]; 
 
     return(
         <div className="w-full h-full bg-white p-8 rounded-lg">
@@ -93,9 +85,9 @@ export async function WeeklyForecast({url, temp_unit, data}: {url: string, temp_
            <div className="grid rows-auto h-full divide-y">
                 {data.map((date, index) => {
                     const day: Date = new Date(date.date);
-                    var day_date: string = 'Today';  
-                    var min_temp: number = Math.round(date.day.mintemp_c); 
-                    var max_temp: number = Math.round(date.day.maxtemp_c); 
+                    let day_date: string = "Today";  
+                    let min_temp: number = Math.round(date.day.mintemp_c); 
+                    let max_temp: number = Math.round(date.day.maxtemp_c); 
 
                     if (index != 0){
                         day_date = dates[day.getDay()]; 
@@ -135,10 +127,10 @@ export async function ForecastWeekCard({day, image, description, min_temp, max_t
 export async function DailyForecast({data} : {data: Hour[]}){
     return(
         <div className="w-full bg-white p-8 rounded-lg">
-            <p className="mb-3 font-bold text-xs text-gray-400">TODAY'S FORECAST</p>
+            <p className="mb-3 font-bold text-xs text-gray-400">TODAY"S FORECAST</p>
             <div className="w-full flex overflow-x-scroll scrollbar-hide whitespace-nowrap divide-x divide-solid">
                 {data.map((hour, index) => {
-                    var string_date : string = hour.time;
+                    const string_date : string = hour.time;
                     string_date.replace(" ", "T"); 
                     const date : Date = new Date(string_date); 
 
@@ -164,8 +156,8 @@ export function ForecastDayCard({hour, image, temp} : {hour: number, image: stri
 }
 
 export async function ConditionsCard({data, unit}:{data:Record<string, any>, unit:string}){
-    var temp_feel:number = data.feelslike_c; 
-    var wind:number = data.wind_kph; 
+    let temp_feel:number = data.feelslike_c; 
+    let wind:number = data.wind_kph; 
     const uv: number = data.uv; 
     const humidity : number = data.humidity; 
 

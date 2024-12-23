@@ -1,9 +1,6 @@
-import Image from "next/image";
 import React, { Suspense } from "react";
-import { TodayCard } from "./ui/cards/cards";
 import NavBar from "./ui/components/navbar";
 import WeatherCardSkeleton from "./ui/cards/skeleton";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import Footer from "./ui/components/footer";
 const WeatherCard = React.lazy(() => import("./ui/cards/cards"));
 
