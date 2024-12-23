@@ -41,16 +41,10 @@ export async function TodayCard({temp_unit, data, location}: {temp_unit: string,
     const is_day = data.is_day; 
     const description = data.condition.text; 
     const image = data.condition.icon; 
-<<<<<<< HEAD
     let temp : number = 0; 
     let wind = data.wind_kph; 
     let precip = data.precip.mm; 
     let feel = data.feelslike_c; 
-=======
-    const uv = data.uv; 
-    const humidity = data.humidity; 
-    let temp : number = 0; 
->>>>>>> e45b049e6a4c0bc9509c5d455b8241416f7d327c
 
     if (temp_unit == "F") {
         temp = data.temp_f; 
@@ -91,11 +85,7 @@ export async function WeeklyForecast({temp_unit, data}: {temp_unit: string, data
            <div className="grid rows-auto h-full divide-y">
                 {data.map((date, index) => {
                     const day: Date = new Date(date.date);
-<<<<<<< HEAD
                     let day_date: string = "Today";  
-=======
-                    let day_date: string = 'Today';  
->>>>>>> e45b049e6a4c0bc9509c5d455b8241416f7d327c
                     let min_temp: number = Math.round(date.day.mintemp_c); 
                     let max_temp: number = Math.round(date.day.maxtemp_c); 
 
@@ -140,11 +130,7 @@ export async function DailyForecast({data} : {data: Hour[]}){
             <p className="mb-3 font-bold text-xs text-gray-400">TODAY"S FORECAST</p>
             <div className="w-full flex overflow-x-scroll scrollbar-hide whitespace-nowrap divide-x divide-solid">
                 {data.map((hour, index) => {
-<<<<<<< HEAD
-                    const string_date : string = hour.time;
-=======
                     let string_date : string = hour.time;
->>>>>>> e45b049e6a4c0bc9509c5d455b8241416f7d327c
                     string_date.replace(" ", "T"); 
                     const date : Date = new Date(string_date); 
 
