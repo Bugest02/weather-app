@@ -22,7 +22,6 @@ export default async function WeatherCard({
         {/* Main content */}
         <div className="col-span-1 lg:col-span-2 space-y-4 w-full">
           <TodayCard
-            temp_unit={temp_unit}
             data={current_data}
             location={location}
           />
@@ -118,7 +117,7 @@ export async function ForecastWeekCard({day, image, description, min_temp, max_t
 export async function DailyForecast({data} : {data: Hour[]}){
     return(
         <div className="w-full bg-white p-8 rounded-lg">
-            <p className="mb-3 font-bold text-xs text-gray-400">TODAY"S FORECAST</p>
+            <p className="mb-3 font-bold text-xs text-gray-400">TODAY&apos;S FORECAST</p>
             <div className="w-full flex overflow-x-scroll scrollbar-hide whitespace-nowrap divide-x divide-solid">
                 {data.map((hour, index) => {
                     const string_date : string = hour.time;

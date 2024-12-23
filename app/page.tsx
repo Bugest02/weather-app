@@ -7,9 +7,11 @@ const WeatherCard = React.lazy(() => import("./ui/cards/cards"));
 export default async function Home({
   searchParams,
 }: {
-  searchParams?: { city?: string };
+  searchParams?: Promise<{ city?: string }>;
 }) {
-  const city = searchParams?.city || "Aguascalientes";
+
+  const resolvedParams = await searchParams;
+  const city = resolvedParams?.city || "Aguascalientes";
 
   return (
     <div className="grid grid-rows-auto items-center justify-items-center gap-5 pt-20 font-[family-name:var(--font-geist-sans)] bg-slate-50">
