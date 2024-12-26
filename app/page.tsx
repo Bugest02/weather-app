@@ -14,7 +14,7 @@ export default async function Home({
   const city = resolvedParams?.city || "Aguascalientes";
 
   return (
-    <div className="grid grid-rows-auto items-center justify-items-center gap-5 pt-20 font-[family-name:var(--font-geist-sans)] bg-slate-50">
+    <div className="grid grid-rows-auto items-center justify-items-center gap-5 pt-20 font-[family-name:var(--font-geist-sans)] bg-slate-100">
       {/* Always render NavBar */}
       <header>
         <NavBar />
